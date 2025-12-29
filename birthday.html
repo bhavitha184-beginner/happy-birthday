@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',sans-serif;
+  color:white;
+  overflow:hidden;
+}
+
+/* Card */
+.card{
+  width:90%;
+  max-width:360px;
+  background:rgba(0,0,0,0.45);
+  border-radius:20px;
+  padding:18px;
+  text-align:center;
+  animation:slideUp 1.2s ease;
+  z-index:2;
+}
+
+/* Slideshow */
+.slideshow{
+  position:relative;
+  height:220px;
+}
+
+.slideshow img{
+  width:100%;
+  height:500px;
+  object-fit:cover;
+  border-radius:16px;
+  position:absolute;
+  top:0;
+  left:0;
+  opacity:0;
+  transition:opacity 3s ease;
+}
+
+.slideshow img.active{
+  opacity:1;
+}
+
+/* Text */
+h1{
+  margin:240px 0 8px;
+  font-size:26px;
+}
+
+#typing{
+  font-size:15px;
+  min-height:44px;
+}
+
+#secondText{
+  margin-top:10px;
+  font-size:14px;
+  opacity:0;
+  transition:opacity 2.5s ease;
+}
+
+/* Tap hint */
+.tap{
+  margin-top:12px;
+  font-size:12px;
+  opacity:0.7;
+}
+
+/* Animations */
+@keyframes slideUp{
+  from{transform:translateY(50px);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+</style>
+</head>
+
+<body onclick="startExperience()">
+
+<div class="card">
+
+  <!-- SLIDESHOW -->
+  <div class="slideshow">
+    <img src="brother3.jpg" class="active">
+    <img src="brother2.jpg">
+    <img scr="brother1.jpg">
+  </div>
+
+  <h1>Happy Birthday</h1>
+
+  <div id="typing"></div>
+  <div id="secondText">Always proud to call you my brother 💙</div>
+
+  <div class="tap">Tap anywhere for music 🎧</div>
+
+</div>
+
+<!-- VERY PLEASANT, SOFT INSTRUMENTAL -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/08/04/audio_5f3c6b9b76.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Typing effect
+const text = "You’re not just my brother,\nyou’re my father.";
+let i = 0;
+
+function typeText(){
+  if(i < text.length){
+    document.getElementById("typing").innerHTML +=
+      text[i] === "\n" ? "<br>" : text[i];
+    i++;
+    setTimeout(typeText, 65);
+  } else {
+    setTimeout(()=>{
+      document.getElementById("secondText").style.opacity = 1;
+    },1000);
+  }
+}
+typeText();
+
+// Slideshow
+let slides = document.querySelectorAll(".slideshow img");
+let index = 0;
+
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index = (index + 1) % slides.length;
+  slides[index].classList.add("active");
+}, 6000);
+
+// Music start (mobile-safe)
+function startExperience(){
+  document.getElementById("music").play();
+  document.querySelector(".tap").style.display="none";
+}
+</script>
+
+</body>
+</html>
